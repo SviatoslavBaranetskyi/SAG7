@@ -10,11 +10,16 @@ from app.api.v1.commitments import router as commitments_router
 from app.api.v1.calendar import router as calendar_router
 from app.core.config import settings
 from app.db.dependencies import get_db
+from app.services.background import expire_commitments_job
 
 
 app = FastAPI(
     title=settings.app_name,
 )
+
+@app.on_event("startup")
+def startup_event():
+    expire_commitments_job()
 
 
 @app.get("/")
