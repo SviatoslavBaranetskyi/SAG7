@@ -34,3 +34,10 @@ def update_commitment_status(db, commitment):
     db.refresh(commitment)
 
     return commitment
+
+def get_commitments_by_user(db, user_id: int):
+    return db.query(Commitment).filter(
+        (Commitment.author_id == user_id) |
+        (Commitment.assignee_id == user_id) |
+        (Commitment.reviewer_id == user_id)
+    ).all()
