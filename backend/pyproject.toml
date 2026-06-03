@@ -1,0 +1,15 @@
+[project]
+name = "status-check"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+dependencies = [
+    "fastapi>=0.116.0",
+    "uvicorn>=0.35.0",
+    "pydantic-settings>=2.10.1",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.12.0",
+]
