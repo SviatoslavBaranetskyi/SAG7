@@ -67,3 +67,24 @@ def get_filtered_commitments(
         query = query.where(Commitment.status == filters.status)
 
     return db.execute(query).scalars().all()
+
+
+def update_commitment(db, commitment, data: dict):
+    for key, value in data.items():
+        setattr(commitment, key, value)
+
+    db.commit()
+    db.refresh(commitment)
+    return commitment
+
+
+def delete_commitment(db, commitment):
+    db.delete(commitment)
+    db.commit()
+
+
+def update_status(db, commitment, status):
+    commitment.status = status
+    db.commit()
+    db.refresh(commitment)
+    return commitment
