@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.repositories.commitment import (
     create_commitment,
     get_commitments_by_project,
+    update_commitment_status,
 )
 
 
@@ -12,3 +13,12 @@ def create_new_commitment(db: Session, data: dict, author_id: int):
 
 def list_project_commitments(db: Session, project_id: int):
     return get_commitments_by_project(db, project_id)
+
+
+def list_project_commitments(db, project_id: int):
+    commitments = get_commitments_by_project(db, project_id)
+
+    for c in commitments:
+        update_commitment_status(db, c)
+
+    return commitments

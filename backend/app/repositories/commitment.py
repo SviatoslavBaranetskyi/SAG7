@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.models.commitment import Commitment, CommitmentStatus
+from app.services.commitment_status import resolve_status
 
 
 def create_commitment(db: Session, data: dict, author_id: int):
@@ -21,3 +22,15 @@ def get_commitments_by_project(db: Session, project_id: int):
     return db.query(Commitment).filter(
         Commitment.project_id == project_id
     ).all()
+
+
+def update_commitment_status(db, commitment):
+    commitment.status = resolve_status(
+        commitment.status,
+        commitment.deadline,
+    )
+
+    db.commit()
+    db.refresh(commitment)
+
+    return commitment
