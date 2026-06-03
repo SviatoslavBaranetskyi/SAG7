@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.v1.auth import router as auth_router
 from app.api.v1.users import router as users_router
+from app.api.v1.projects import router as projects_router
 from app.core.config import settings
 from app.db.dependencies import get_db
 
@@ -33,3 +34,4 @@ def db_health(
 
 app.include_router(auth_router, prefix=settings.api_v1_prefix)
 app.include_router(users_router, prefix=settings.api_v1_prefix)
+app.include_router(projects_router, prefix=settings.api_v1_prefix)
